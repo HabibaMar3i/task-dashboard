@@ -2,12 +2,13 @@
 @import 'primeicons/primeicons.css';
 
 @theme {
-  --color-task-overdue-bg: #ffebee;
-  --color-task-overdue: #d32f2f;
-  --color-task-border: #e0e0e0;
-  --color-task-muted: #757575;
-  --color-task-text: #212121;
-  --color-task-avatar: #1976d2;
+  --color-danger-subtle: #ffebee;
+  --color-danger: #d32f2f;
+  --color-border: #e0e0e0;
+  --color-surface-muted: #e0e0e0;
+  --color-text-muted: #757575;
+  --color-text-primary: #212121;
+  --color-accent: #1976d2;
 }
 
 body {

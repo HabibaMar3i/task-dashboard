@@ -1,22 +1,20 @@
 <div
-  class="rounded-lg border border-task-border bg-white p-4"
+  class="rounded-lg border border-border bg-white p-4"
   [class.border-l-4]="isOverdue()"
-  [class.border-l-task-overdue]="isOverdue()"
-  [class.bg-task-overdue-bg]="isOverdue()"
+  [class.border-l-danger]="isOverdue()"
+  [class.bg-danger-subtle]="isOverdue()"
 >
   <div class="mb-2 flex items-center justify-between">
-    <span
-      class="rounded bg-task-overdue-bg px-2 py-1 text-[10px] font-bold uppercase text-task-overdue"
-    >
+    <span class="rounded bg-danger-subtle px-2 py-1 text-[10px] font-bold uppercase text-danger">
       {{ task().priority }}
     </span>
-    <span class="text-lg leading-none text-task-muted" aria-hidden="true">⋮</span>
+    <span class="text-lg leading-none text-text-muted" aria-hidden="true">⋮</span>
   </div>
 
-  <h3 class="mb-1 text-sm font-bold text-task-text">{{ task().title }}</h3>
-  <p class="mb-2 text-xs text-task-muted">{{ task().description }}</p>
+  <h3 class="mb-1 text-sm font-bold text-text-primary">{{ task().title }}</h3>
+  <p class="mb-2 text-xs text-text-muted">{{ task().description }}</p>
 
-  <div class="space-y-0.5 text-xs text-task-muted">
+  <div class="space-y-0.5 text-xs text-text-muted">
     @if (isOverdue()) {
       <p>⚠ {{ overdueMessage() }}</p>
     } @else {
@@ -27,12 +25,12 @@
     }
   </div>
 
-  <div class="mt-4 flex items-center gap-1 border-t border-task-border pt-3">
+  <div class="mt-4 flex items-center gap-1 border-t border-border pt-3">
     <span
-      class="flex size-6 items-center justify-center rounded-full bg-task-avatar text-[10px] font-bold text-white"
+      class="flex size-6 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
     >
       {{ task().assignee.avatar }}
     </span>
-    <span class="text-xs text-task-text">@{{ task().assignee.name }}</span>
+    <span class="text-xs text-text-primary">@{{ task().assignee.name }}</span>
   </div>
 </div>

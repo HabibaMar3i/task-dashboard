@@ -1,8 +1,11 @@
-<section class="rounded-lg bg-gray-50 p-3">
-  <h2 class="mb-3 font-semibold">
-    {{ heading() }} <span class="text-sm text-gray-500">{{ tasks().length }}</span>
+<section class="rounded-lg border-b-2 border-solid border-border bg-white p-4">
+  <h2 class="mb-2 flex items-center justify-between font-bold">
+    <span class="inter">{{ heading() }} </span>
+    <span class="rounded-xl bg-surface-muted px-2 py-px text-sm text-text-primary">
+      {{ tasks().length }}
+    </span>
   </h2>
-  <div class="flex flex-col gap-3">
+  <div class="flex flex-col gap-4">
     @for (task of tasks(); track task.id) {
       <app-task-card [task]="task" />
     }
