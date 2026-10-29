@@ -1,13 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { TasksStore } from '../../core/stores/tasks.store';
 import { TaskColumnComponent } from './task-column/task-column.component';
 import { TaskStatus, TaskPriority } from '../../core/models/task.model';
+import {
+  TaskFormValue,
+  TaskFormDialogComponent,
+} from './task-form-dialog/task-form-dialog.component';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TaskColumnComponent],
+  imports: [TaskColumnComponent, TaskFormDialogComponent],
 })
 export class TasksPage implements OnInit {
   store = inject(TasksStore);
@@ -25,5 +29,11 @@ export class TasksPage implements OnInit {
 
   onPriorityChange(value: string): void {
     this.store.setPriority((value || null) as TaskPriority | null);
+  }
+
+  showForm = signal(false);
+
+  onSave(value: TaskFormValue) {
+    console.log(value);
   }
 }

@@ -34,9 +34,14 @@
       <option value="low">Low</option>
     </select>
 
-    <button type="button" class="rounded bg-accent px-4 py-1.5 text-sm font-bold text-white">
+    <button
+      type="button"
+      class="rounded bg-accent px-4 py-1.5 text-sm font-bold text-white cursor-pointer"
+      (click)="showForm.set(true)"
+    >
       + New Task
     </button>
+    <app-task-form-dialog [(visible)]="showForm" (save)="onSave($event)" />
   </div>
 </div>
 
