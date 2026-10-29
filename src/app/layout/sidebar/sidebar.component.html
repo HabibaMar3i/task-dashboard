@@ -1,1 +1,23 @@
-<h1>test</h1>
+<aside class="flex w-60 flex-col justify-between border-r border-border bg-white p-4">
+  <nav class="flex flex-col gap-4" aria-label="Main navigation">
+    @for (link of links; track link.label) {
+      <a
+        href="#"
+        class="flex items-center gap-4 rounded px-3 py-2 text-sm"
+        [class.bg-accent]="link.active"
+        [class.text-white]="link.active"
+        [class.text-text-primary]="!link.active"
+      >
+        <span aria-hidden="true">{{ link.icon }}</span>
+        {{ link.label }}
+      </a>
+    }
+  </nav>
+
+  <button
+    type="button"
+    class="w-full rounded bg-accent px-4 py-2 text-sm font-semibold text-white mt-4"
+  >
+    + New Task
+  </button>
+</aside>

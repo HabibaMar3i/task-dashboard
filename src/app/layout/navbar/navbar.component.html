@@ -1,8 +1,31 @@
-<input
-  type="search"
-  placeholder="Search tasks..."
-  aria-label="Search tasks"
-  class="w-80 rounded border border-border bg-surface-muted px-3 py-1.5 text-sm"
-  [value]="store.filters().search"
-  (input)="onSearch($event)"
-/>
+<header
+  class="grid grid-cols-1 items-center gap-3 border-b border-border bg-white px-4 py-3 md:grid-cols-[1fr_minmax(16rem,32rem)_1fr]"
+>
+  <div class="flex items-center">
+    <span
+      class="flex size-9 items-center justify-center rounded-lg bg-accent text-white"
+      aria-hidden="true"
+    >
+      📋
+    </span>
+    <span class="ml-3 text-lg font-bold text-accent">Task Manager</span>
+  </div>
+
+  <input
+    type="search"
+    placeholder="🔍 Search tasks..."
+    aria-label="Search tasks"
+    class="w-full rounded-md border border-border bg-white px-4 py-2 text-sm"
+    [value]="store.filters().search"
+    (input)="onSearch($event)"
+  />
+
+  <div class="flex items-center justify-end gap-3">
+    <span
+      class="flex size-6 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
+    >
+      HM
+    </span>
+    <span class="text-lg p-3">🔔</span>
+  </div>
+</header>
