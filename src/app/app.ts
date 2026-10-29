@@ -12,7 +12,7 @@ import { TaskService } from './core/services/task.service';
 export class App {
   protected readonly title = signal('task-dashboard');
   private taskService = inject(TaskService);
-  constructor() {
-    this.taskService.getAllTasks().subscribe(console.log);
-  }
+  // constructor() {
+  //   this.taskService.getAllTasks().subscribe(console.log);
+  // }
 }

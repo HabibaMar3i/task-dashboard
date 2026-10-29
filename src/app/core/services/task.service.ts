@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, retry, throwError } from 'rxjs';
 import { NewTask, Task } from '../models/task.model';
 
 @Injectable({ providedIn: 'root' })
@@ -9,7 +9,25 @@ export class TaskService {
   private readonly baseURL = '/api/tasks';
 
   getAllTasks(): Observable<Task[]> {
-    return this.httpClient.get<Task[]>(this.baseURL);
+    return this.httpClient
+      .get<Task[]>(this.baseURL)
+      .pipe(retry({ count: 2, delay: 500 }), catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let message: string;
+
+    if (error.status === 0) {
+      message = 'Cannot reach the server. Check your connection.';
+    } else if (error.status === 404) {
+      message = 'The requested item was not found.';
+    } else if (error.status >= 500) {
+      message = 'Server error. Please try again later.';
+    } else {
+      message = 'Something went wrong. Please try again.';
+    }
+
+    return throwError(() => new Error(message));
   }
 
   createNewTask(task: NewTask): Observable<Task> {
