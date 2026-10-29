@@ -6,13 +6,39 @@
   <p>{{ store.error() }}</p>
 }
 
-<!-- @for (task of store.filteredTasks(); track task.id) {
-  <p>{{ task.title }}</p>
-}
+<div class="mb-4 flex items-center justify-between rounded-lg bg-white p-3 shadow-sm">
+  <div class="flex gap-2">
+    @for (tab of statusTabs; track tab.label) {
+      <button
+        type="button"
+        class="rounded px-4 py-1.5 text-sm"
+        [class.bg-accent]="store.filters().status === tab.value"
+        [class.text-white]="store.filters().status === tab.value"
+        [class.text-text-primary]="store.filters().status !== tab.value"
+        (click)="store.setStatus(tab.value)"
+      >
+        {{ tab.label }}
+      </button>
+    }
+  </div>
 
-@for (task of store.filteredTasks(); track task.id) {
-  <app-task-card [task]="task" />
-} -->
+  <div class="flex items-center gap-3">
+    <select
+      class="rounded border border-border bg-white px-3 py-1.5 text-sm"
+      [value]="store.filters().priority ?? ''"
+      (change)="onPriorityChange($any($event.target).value)"
+    >
+      <option value="">Priority</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+      <option value="low">Low</option>
+    </select>
+
+    <button type="button" class="rounded bg-accent px-4 py-1.5 text-sm font-bold text-white">
+      + New Task
+    </button>
+  </div>
+</div>
 
 <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
   <app-task-column heading="To Do" [tasks]="store.todoTasks()" />
