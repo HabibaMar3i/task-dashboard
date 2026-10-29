@@ -45,7 +45,7 @@ export class TaskService {
     });
   }
 
-  removeTask(id: string): Observable<Task> {
-    return this.httpClient.delete<Task>(`${this.baseURL}/${id}`);
+  removeTask(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.baseURL}/${id}`);
   }
 }

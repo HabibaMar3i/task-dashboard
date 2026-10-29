@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { Task, TaskFilters, TaskPriority, TaskStatus } from '../models/task.model';
+import { NewTask, Task, TaskFilters, TaskPriority, TaskStatus } from '../models/task.model';
 import { TaskService } from '../services/task.service';
-import { finalize } from 'rxjs';
+import { finalize, Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
@@ -68,5 +68,27 @@ export class TasksStore {
 
   clearFilters(): void {
     this._filters.set({ status: null, priority: null, assigneeId: null, search: '' });
+  }
+
+  addTask(task: NewTask): Observable<Task> {
+    return this.taskService
+      .createNewTask(task)
+      .pipe(tap((created) => this._tasks.update((tasks) => [...tasks, created])));
+  }
+
+  updateTask(id: string, changes: Partial<Task>): Observable<Task> {
+    return this.taskService
+      .updateTask(id, changes)
+      .pipe(
+        tap((updated) =>
+          this._tasks.update((tasks) => tasks.map((t) => (t.id === updated.id ? updated : t))),
+        ),
+      );
+  }
+
+  removeTask(id: string): Observable<void> {
+    return this.taskService
+      .removeTask(id)
+      .pipe(tap(() => this._tasks.update((tasks) => tasks.filter((t) => t.id !== id))));
   }
 }
