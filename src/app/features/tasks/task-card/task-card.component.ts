@@ -22,4 +22,13 @@ export class TaskCardComponent {
     );
     return `Overdue by ${days} ${days === 1 ? 'day' : 'days'}`;
   });
+
+  priorityClass = computed(() => {
+    const classes = {
+      high: 'bg-danger-subtle text-danger',
+      medium: 'bg-[#FFF3E0] text-[#F57C00]',
+      low: 'bg-[#FFF3E0] text-[#388E3C]',
+    };
+    return classes[this.task().priority];
+  });
 }

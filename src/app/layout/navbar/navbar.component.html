@@ -1,0 +1,8 @@
+<input
+  type="search"
+  placeholder="Search tasks..."
+  aria-label="Search tasks"
+  class="w-80 rounded border border-border bg-surface-muted px-3 py-1.5 text-sm"
+  [value]="store.filters().search"
+  (input)="onSearch($event)"
+/>

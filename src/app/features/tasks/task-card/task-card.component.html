@@ -5,7 +5,7 @@
   [class.bg-danger-subtle]="isOverdue()"
 >
   <div class="mb-2 flex items-center justify-between">
-    <span class="rounded bg-danger-subtle px-2 py-1 text-[10px] font-bold uppercase text-danger">
+    <span class="rounded px-2 py-1 text-[10px] font-bold uppercase" [class]="priorityClass()">
       {{ task().priority }}
     </span>
     <span class="text-lg leading-none text-text-muted" aria-hidden="true">⋮</span>
