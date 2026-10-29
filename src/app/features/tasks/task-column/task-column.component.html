@@ -1,0 +1,10 @@
+<section class="rounded-lg bg-gray-50 p-3">
+  <h2 class="mb-3 font-semibold">
+    {{ heading() }} <span class="text-sm text-gray-500">{{ tasks().length }}</span>
+  </h2>
+  <div class="flex flex-col gap-3">
+    @for (task of tasks(); track task.id) {
+      <app-task-card [task]="task" />
+    }
+  </div>
+</section>

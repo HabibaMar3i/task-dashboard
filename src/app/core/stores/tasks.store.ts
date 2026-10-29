@@ -37,6 +37,12 @@ export class TasksStore {
     );
   });
 
+  readonly todoTasks = computed(() => this.filteredTasks().filter((t) => t.status === 'todo'));
+  readonly inProgressTasks = computed(() =>
+    this.filteredTasks().filter((t) => t.status === 'in_progress'),
+  );
+  readonly doneTasks = computed(() => this.filteredTasks().filter((t) => t.status === 'done'));
+
   loadTasks(): void {
     this._loading.set(true);
     this._error.set(null);

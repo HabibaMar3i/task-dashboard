@@ -1,0 +1,21 @@
+@if (store.loading()) {
+  <p>Loading...</p>
+}
+
+@if (store.error()) {
+  <p>{{ store.error() }}</p>
+}
+
+<!-- @for (task of store.filteredTasks(); track task.id) {
+  <p>{{ task.title }}</p>
+}
+
+@for (task of store.filteredTasks(); track task.id) {
+  <app-task-card [task]="task" />
+} -->
+
+<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+  <app-task-column heading="To Do" [tasks]="store.todoTasks()" />
+  <app-task-column heading="In Progress" [tasks]="store.inProgressTasks()" />
+  <app-task-column heading="Done" [tasks]="store.doneTasks()" />
+</div>
