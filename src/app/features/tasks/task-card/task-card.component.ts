@@ -13,4 +13,13 @@ export class TaskCardComponent {
     const today = new Date().toISOString().split('T')[0];
     return this.task().status !== 'done' && this.task().dueDate < today;
   });
+
+  overdueMessage = computed(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const days = Math.max(
+      1,
+      Math.floor((Date.parse(today) - Date.parse(this.task().dueDate)) / 86_400_000),
+    );
+    return `Overdue by ${days} ${days === 1 ? 'day' : 'days'}`;
+  });
 }

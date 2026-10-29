@@ -1,5 +1,15 @@
 @import 'tailwindcss';
 @import 'primeicons/primeicons.css';
+
+@theme {
+  --color-task-overdue-bg: #ffebee;
+  --color-task-overdue: #d32f2f;
+  --color-task-border: #e0e0e0;
+  --color-task-muted: #757575;
+  --color-task-text: #212121;
+  --color-task-avatar: #1976d2;
+}
+
 body {
   margin: 0;
   background: #f3f4f6;
