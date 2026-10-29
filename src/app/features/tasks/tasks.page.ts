@@ -18,6 +18,7 @@ export class TasksPage implements OnInit {
 
   ngOnInit() {
     this.store.loadTasks();
+    this.store.loadUsers();
   }
 
   statusTabs: { label: string; value: TaskStatus | null }[] = [
@@ -34,6 +35,21 @@ export class TasksPage implements OnInit {
   showForm = signal(false);
 
   onSave(value: TaskFormValue) {
-    console.log(value);
+    const assignee = this.store.users().find((u) => u.id === value.assigneeId);
+    if (!assignee) return;
+
+    this.store
+      .addTask({
+        title: value.title,
+        description: value.description,
+        priority: value.priority,
+        status: value.status,
+        dueDate: value.dueDate,
+        tags: value.tags,
+        assignee,
+      })
+      .subscribe({
+        error: (e: Error) => console.log(e.message),
+      });
   }
 }

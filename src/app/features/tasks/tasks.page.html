@@ -41,7 +41,7 @@
     >
       + New Task
     </button>
-    <app-task-form-dialog [(visible)]="showForm" (save)="onSave($event)" />
+    <app-task-form-dialog [users]="store.users()" [(visible)]="showForm" (save)="onSave($event)" />
   </div>
 </div>
 

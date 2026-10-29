@@ -37,7 +37,33 @@
       @if (form.controls.dueDate.touched && form.controls.dueDate.invalid) {
         <small class="text-red-600">Due date is required</small>
       }
+      @if (form.controls.dueDate.errors?.['pastDate']) {
+        <small class="text-red-600">Due date can't be in the past</small>
+      }
     </label>
+
+    <label class="flex flex-col gap-1">
+      Assignee
+      <select formControlName="assigneeId" class="rounded border p-2">
+        <option value="">Select...</option>
+        @for (user of users(); track user.id) {
+          <option [value]="user.id">{{ user.name }}</option>
+        }
+      </select>
+      @if (form.controls.assigneeId.touched && form.controls.assigneeId.invalid) {
+        <small class="text-red-600">Choose an assignee</small>
+      }
+    </label>
+
+    <div formArrayName="tags" class="flex flex-col gap-2">
+      @for (tag of tags.controls; track $index) {
+        <div class="flex gap-2">
+          <input [formControlName]="$index" class="flex-1 rounded border p-2" />
+          <button type="button" (click)="removeTag($index)">Remove</button>
+        </div>
+      }
+      <button type="button" (click)="addTag()">+ Add tag</button>
+    </div>
 
     <button type="submit" class="rounded bg-blue-600 p-2 text-white">Save</button>
   </form>

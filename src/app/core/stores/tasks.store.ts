@@ -1,7 +1,15 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { NewTask, Task, TaskFilters, TaskPriority, TaskStatus } from '../models/task.model';
+import {
+  Assignee,
+  NewTask,
+  Task,
+  TaskFilters,
+  TaskPriority,
+  TaskStatus,
+} from '../models/task.model';
 import { TaskService } from '../services/task.service';
 import { finalize, Observable, tap } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
@@ -96,5 +104,14 @@ export class TasksStore {
     return this.taskService
       .removeTask(id)
       .pipe(tap(() => this._tasks.update((tasks) => tasks.filter((t) => t.id !== id))));
+  }
+
+  // Users
+  private readonly userService = inject(UserService);
+  private readonly _users = signal<Assignee[]>([]);
+  readonly users = this._users.asReadonly();
+
+  loadUsers(): void {
+    this.userService.getAllUsers().subscribe((users) => this._users.set(users));
   }
 }
