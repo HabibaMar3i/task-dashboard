@@ -53,4 +53,11 @@ describe('AnalyticsPage', () => {
     expect(fixture.componentInstance.statusChart().datasets[0].data).toEqual([2, 1, 1]);
     expect(fixture.componentInstance.priorityChart().datasets[0].data).toEqual([2, 1, 1]);
   });
+
+  it('configures charts to resize within their containers', () => {
+    const fixture = TestBed.createComponent(AnalyticsPage);
+
+    expect(fixture.componentInstance.chartOptions.responsive).toBe(true);
+    expect(fixture.componentInstance.chartOptions.maintainAspectRatio).toBe(false);
+  });
 });

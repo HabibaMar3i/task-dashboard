@@ -11,14 +11,18 @@
 
 <h1 class="mb-4 text-2xl text-accent font-bold">Analytics</h1>
 
-<div class="grid gap-6 md:grid-cols-2">
-  <section class="rounded-lg border border-accent shadow-md bg-white p-4">
+<div class="grid min-w-0 gap-6 md:grid-cols-2">
+  <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">
     <h2 class="mb-2 font-semibold">Tasks by status</h2>
-    <p-chart type="doughnut" [data]="statusChart()" [options]="chartOptions" />
+    <div class="relative h-64 min-w-0">
+      <p-chart type="doughnut" [data]="statusChart()" [options]="chartOptions" />
+    </div>
   </section>
 
-  <section class="rounded-lg border border-accent shadow-md bg-white p-4">
+  <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">
     <h2 class="mb-2 font-semibold">Tasks by priority</h2>
-    <p-chart type="doughnut" [data]="priorityChart()" [options]="chartOptions" />
+    <div class="relative h-64 min-w-0">
+      <p-chart type="doughnut" [data]="priorityChart()" [options]="chartOptions" />
+    </div>
   </section>
 </div>

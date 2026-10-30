@@ -20,7 +20,11 @@ export class AnalyticsPage implements OnInit {
   activities = httpResource<Activity[]>(() => '/api/activities');
 
   /** Options shared by the analytics charts. */
-  chartOptions = { plugins: { legend: { position: 'bottom' } } };
+  chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+  };
 
   /** Task counts grouped by workflow status. */
   statusChart = computed(() => {
