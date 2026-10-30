@@ -6,6 +6,18 @@
   <p>{{ store.error() }}</p>
 }
 
+<div class="mb-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
+  @if (statistics.isLoading()) {
+    <p>Loading statistics...</p>
+  }
+  @if (statistics.error()) {
+    <p>Could not load statistics.</p>
+  }
+  @for (statistic of statistics.value() ?? []; track statistic.id) {
+    <app-statistic-card [statistic]="statistic" />
+  }
+</div>
+
 <div class="mb-4 flex items-center justify-between rounded-lg bg-white p-3 shadow-sm">
   <div class="flex gap-2">
     @for (tab of statusTabs; track tab.label) {

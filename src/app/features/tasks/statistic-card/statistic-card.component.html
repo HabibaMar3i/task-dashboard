@@ -1,0 +1,11 @@
+<div class="rounded-lg bg-white p-6 shadow-md">
+  <p class="text-xs text-text-muted mb-7">{{ statistic().icon }} {{ statistic().title }}</p>
+  <p class="text-3xl font-bold mb-2">{{ statistic().value }}</p>
+  <p
+    class="text-xs"
+    [class.text-green-600]="statistic().changeType === 'positive'"
+    [class.text-red-600]="statistic().changeType === 'negative'"
+  >
+    {{ statistic().change }} {{ statistic().changeLabel }}
+  </p>
+</div>

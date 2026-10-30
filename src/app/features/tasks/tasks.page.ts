@@ -9,17 +9,27 @@ import {
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { httpResource } from '@angular/common/http';
+import { Statistic } from '../../core/models/statistic.model';
+import { StatCardComponent } from './statistic-card/statistic-card.component';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TaskColumnComponent, TaskFormDialogComponent, ConfirmDialogModule, CdkDropListGroup],
+  imports: [
+    TaskColumnComponent,
+    TaskFormDialogComponent,
+    ConfirmDialogModule,
+    CdkDropListGroup,
+    StatCardComponent,
+  ],
   providers: [ConfirmationService],
 })
 export class TasksPage implements OnInit {
   store = inject(TasksStore);
   private confirmationService = inject(ConfirmationService);
+  statistics = httpResource<Statistic[]>(() => '/api/statistics');
 
   ngOnInit() {
     this.store.loadTasks();
