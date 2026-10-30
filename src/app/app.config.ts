@@ -6,6 +6,7 @@ import Aura from '@primeuix/themes/aura';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { cacheInterceptor } from './core/interceptors/cache.interceptor';
 
+/** Configures the router, PrimeNG theme, and HTTP providers for the application. */
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -19,7 +20,6 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
-    provideHttpClient(withFetch()),
     provideHttpClient(withFetch(), withInterceptors([cacheInterceptor])),
   ],
 };
