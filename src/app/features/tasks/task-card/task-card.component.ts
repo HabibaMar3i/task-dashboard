@@ -33,4 +33,5 @@ export class TaskCardComponent {
   });
 
   edit = output<Task>();
+  deleteTask = output<Task>();
 }

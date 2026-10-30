@@ -12,4 +12,5 @@ export class TaskColumnComponent {
   heading = input.required<string>();
   tasks = input.required<Task[]>();
   edit = output<Task>();
+  deleteTask = output<Task>();
 }

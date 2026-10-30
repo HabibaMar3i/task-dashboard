@@ -51,11 +51,24 @@
 </div>
 
 <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-  <app-task-column heading="To Do" [tasks]="store.todoTasks()" (edit)="openEdit($event)" />
+  <app-task-column
+    heading="To Do"
+    [tasks]="store.todoTasks()"
+    (edit)="openEdit($event)"
+    (deleteTask)="confirmDelete($event)"
+  />
   <app-task-column
     heading="In Progress"
     [tasks]="store.inProgressTasks()"
     (edit)="openEdit($event)"
+    (deleteTask)="confirmDelete($event)"
   />
-  <app-task-column heading="Done" [tasks]="store.doneTasks()" (edit)="openEdit($event)" />
+  <app-task-column
+    heading="Done"
+    [tasks]="store.doneTasks()"
+    (edit)="openEdit($event)"
+    (deleteTask)="confirmDelete($event)"
+  />
 </div>
+
+<p-confirmdialog />

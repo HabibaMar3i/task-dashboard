@@ -7,7 +7,11 @@
   </h2>
   <div class="flex flex-col gap-4">
     @for (task of tasks(); track task.id) {
-      <app-task-card [task]="task" (edit)="edit.emit($event)" />
+      <app-task-card
+        [task]="task"
+        (edit)="edit.emit($event)"
+        (deleteTask)="deleteTask.emit($event)"
+      />
     }
   </div>
 </section>

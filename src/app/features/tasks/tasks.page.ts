@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, output, signal } from '@angular/core';
 import { TasksStore } from '../../core/stores/tasks.store';
 import { TaskColumnComponent } from './task-column/task-column.component';
 import { TaskStatus, TaskPriority, Task } from '../../core/models/task.model';
@@ -6,15 +6,19 @@ import {
   TaskFormValue,
   TaskFormDialogComponent,
 } from './task-form-dialog/task-form-dialog.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TaskColumnComponent, TaskFormDialogComponent],
+  imports: [TaskColumnComponent, TaskFormDialogComponent, ConfirmDialogModule],
+  providers: [ConfirmationService],
 })
 export class TasksPage implements OnInit {
   store = inject(TasksStore);
+  private confirmationService = inject(ConfirmationService);
 
   ngOnInit() {
     this.store.loadTasks();
@@ -66,5 +70,21 @@ export class TasksPage implements OnInit {
       : this.store.addTask(fields);
 
     request.subscribe({ error: (e: Error) => console.log(e.message) });
+  }
+
+  remove = output<Task>();
+
+  confirmDelete(task: Task) {
+    this.confirmationService.confirm({
+      header: 'Delete task',
+      message: `Delete "${task.title}"?`,
+      acceptLabel: 'Delete',
+      rejectLabel: 'Cancel',
+      accept: () => {
+        this.store.removeTask(task.id).subscribe({
+          error: (e: Error) => console.log(e.message),
+        });
+      },
+    });
   }
 }
