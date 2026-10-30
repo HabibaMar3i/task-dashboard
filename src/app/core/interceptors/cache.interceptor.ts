@@ -3,6 +3,7 @@ import { of, tap } from 'rxjs';
 
 const cache = new Map<string, HttpResponse<unknown>>();
 
+/** Caches GET responses and clears cached entries when a non-GET request is made. */
 export const cacheInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.method !== 'GET') {
     cache.clear();
