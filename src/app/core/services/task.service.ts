@@ -31,21 +31,25 @@ export class TaskService {
   }
 
   createNewTask(task: NewTask): Observable<Task> {
-    return this.httpClient.post<Task>(this.baseURL, {
-      ...task,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    });
+    return this.httpClient
+      .post<Task>(this.baseURL, {
+        ...task,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      })
+      .pipe(catchError(this.handleError));
   }
 
   updateTask(id: string, changes: Partial<Task>): Observable<Task> {
-    return this.httpClient.patch<Task>(`${this.baseURL}/${id}`, {
-      ...changes,
-      updatedAt: new Date().toISOString(),
-    });
+    return this.httpClient
+      .patch<Task>(`${this.baseURL}/${id}`, {
+        ...changes,
+        updatedAt: new Date().toISOString(),
+      })
+      .pipe(catchError(this.handleError));
   }
 
   removeTask(id: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.baseURL}/${id}`);
+    return this.httpClient.delete<void>(`${this.baseURL}/${id}`).pipe(catchError(this.handleError));
   }
 }
