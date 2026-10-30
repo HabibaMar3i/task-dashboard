@@ -1,17 +1,18 @@
 @if (store.loading()) {
-  <p>Loading...</p>
-}
-
-@if (store.error()) {
-  <p>{{ store.error() }}</p>
+  <div class="flex min-h-[50vh] items-center justify-center">
+    <p-progress-spinner ariaLabel="Loading tasks" />
+  </div>
+} @else if (store.error()) {
+  <p-message severity="error" variant="simple">{{ store.error() }}</p-message>
 }
 
 <div class="mb-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
   @if (statistics.isLoading()) {
-    <p>Loading statistics...</p>
-  }
-  @if (statistics.error()) {
-    <p>Could not load statistics.</p>
+    <div class="col-span-full flex min-h-40 items-center justify-center">
+      <p-progress-spinner ariaLabel="Loading statistics" />
+    </div>
+  } @else if (statistics.error()) {
+    <p-message severity="error" variant="simple">Could not load statistics.</p-message>
   }
   @for (statistic of statistics.value() ?? []; track statistic.id) {
     <app-statistic-card [statistic]="statistic" />
@@ -64,31 +65,33 @@
   </div>
 </div>
 
-<div class="grid grid-cols-1 gap-4 md:grid-cols-3" cdkDropListGroup>
-  <app-task-column
-    heading="To Do"
-    [tasks]="store.todoTasks()"
-    (edit)="openEdit($event)"
-    (deleteTask)="confirmDelete($event)"
-    status="todo"
-    (moved)="onMoved($event)"
-  />
-  <app-task-column
-    heading="In Progress"
-    [tasks]="store.inProgressTasks()"
-    (edit)="openEdit($event)"
-    (deleteTask)="confirmDelete($event)"
-    status="in_progress"
-    (moved)="onMoved($event)"
-  />
-  <app-task-column
-    heading="Done"
-    [tasks]="store.doneTasks()"
-    (edit)="openEdit($event)"
-    (deleteTask)="confirmDelete($event)"
-    status="done"
-    (moved)="onMoved($event)"
-  />
-</div>
+@if (!store.loading() && !store.error()) {
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3" cdkDropListGroup>
+    <app-task-column
+      heading="To Do"
+      [tasks]="store.todoTasks()"
+      (edit)="openEdit($event)"
+      (deleteTask)="confirmDelete($event)"
+      status="todo"
+      (moved)="onMoved($event)"
+    />
+    <app-task-column
+      heading="In Progress"
+      [tasks]="store.inProgressTasks()"
+      (edit)="openEdit($event)"
+      (deleteTask)="confirmDelete($event)"
+      status="in_progress"
+      (moved)="onMoved($event)"
+    />
+    <app-task-column
+      heading="Done"
+      [tasks]="store.doneTasks()"
+      (edit)="openEdit($event)"
+      (deleteTask)="confirmDelete($event)"
+      status="done"
+      (moved)="onMoved($event)"
+    />
+  </div>
+}
 
 <p-confirmdialog />

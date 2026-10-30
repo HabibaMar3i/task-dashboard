@@ -17,9 +17,4 @@ export class App {
   protected readonly title = signal('task-dashboard');
 
   private taskService = inject(TaskService);
-
-  /** Loads tasks when the root component is created. */
-  constructor() {
-    this.taskService.getAllTasks().subscribe(console.log);
-  }
 }

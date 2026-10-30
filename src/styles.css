@@ -16,3 +16,7 @@ body {
   background: #f3f4f6;
   color: #111827;
 }
+
+.p-progressspinner-circle {
+  stroke: var(--color-accent) !important;
+}

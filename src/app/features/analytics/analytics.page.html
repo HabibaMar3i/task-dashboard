@@ -1,28 +1,38 @@
 <section class="mt-6 rounded-lg shadow-md mb-4 border border-accent bg-white p-4">
   <h2 class="mb-4 text-2xl font-bold text-accent">Recent activity</h2>
   @if (activities.isLoading()) {
-    <p>Loading activity...</p>
+    <div class="flex h-32 items-center justify-center">
+      <p-progress-spinner ariaLabel="Loading activity" />
+    </div>
+  } @else if (activities.error()) {
+    <p-message severity="error" variant="simple">Could not load activity.</p-message>
+  } @else {
+    <app-activity-feed [activities]="activities.value() ?? []" />
   }
-  @if (activities.error()) {
-    <p>Could not load activity.</p>
-  }
-  <app-activity-feed [activities]="activities.value() ?? []" />
 </section>
 
 <h1 class="mb-4 text-2xl text-accent font-bold">Analytics</h1>
 
-<div class="grid min-w-0 gap-6 md:grid-cols-2">
-  <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">
-    <h2 class="mb-2 font-semibold">Tasks by status</h2>
-    <div class="relative h-64 min-w-0">
-      <p-chart type="doughnut" [data]="statusChart()" [options]="chartOptions" />
-    </div>
-  </section>
+@if (store.loading()) {
+  <div class="flex min-h-[50vh] items-center justify-center">
+    <p-progress-spinner ariaLabel="Loading analytics" />
+  </div>
+} @else if (store.error()) {
+  <p-message severity="error" variant="simple">{{ store.error() }}</p-message>
+} @else {
+  <div class="grid min-w-0 gap-6 md:grid-cols-2">
+    <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">
+      <h2 class="mb-2 font-semibold">Tasks by status</h2>
+      <div class="relative h-64 min-w-0">
+        <p-chart type="doughnut" [data]="statusChart()" [options]="chartOptions" />
+      </div>
+    </section>
 
-  <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">
-    <h2 class="mb-2 font-semibold">Tasks by priority</h2>
-    <div class="relative h-64 min-w-0">
-      <p-chart type="doughnut" [data]="priorityChart()" [options]="chartOptions" />
-    </div>
-  </section>
-</div>
+    <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">
+      <h2 class="mb-2 font-semibold">Tasks by priority</h2>
+      <div class="relative h-64 min-w-0">
+        <p-chart type="doughnut" [data]="priorityChart()" [options]="chartOptions" />
+      </div>
+    </section>
+  </div>
+}

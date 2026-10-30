@@ -12,6 +12,8 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { httpResource } from '@angular/common/http';
 import { Statistic } from '../../core/models/statistic.model';
 import { StatCardComponent } from './statistic-card/statistic-card.component';
+import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 /** Coordinates task filtering, editing, deletion, and drag-and-drop on the dashboard. */
 @Component({
@@ -24,6 +26,8 @@ import { StatCardComponent } from './statistic-card/statistic-card.component';
     ConfirmDialogModule,
     CdkDropListGroup,
     StatCardComponent,
+    MessageModule,
+    ProgressSpinnerModule,
   ],
   providers: [ConfirmationService],
 })

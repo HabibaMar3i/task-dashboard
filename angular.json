@@ -53,6 +53,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "prebundle": {
+              "exclude": ["primeng/chart", "chart.js", "primeng/message", "primeng/progressspinner"]
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "task-dashboard:build:production"

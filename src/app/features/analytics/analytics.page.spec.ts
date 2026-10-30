@@ -14,17 +14,21 @@ describe('AnalyticsPage', () => {
     { status: 'done', priority: 'low' },
     { status: 'todo', priority: 'high' },
   ]);
+  const loading = signal(false);
+  const error = signal<string | null>(null);
   const loadTasks = vi.fn();
 
   beforeEach(async () => {
     loadTasks.mockClear();
+    loading.set(false);
+    error.set(null);
 
     await TestBed.configureTestingModule({
       imports: [AnalyticsPage],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: TasksStore, useValue: { tasks, loadTasks } },
+        { provide: TasksStore, useValue: { tasks, loading, error, loadTasks } },
       ],
     }).compileComponents();
 
@@ -59,5 +63,27 @@ describe('AnalyticsPage', () => {
 
     expect(fixture.componentInstance.chartOptions.responsive).toBe(true);
     expect(fixture.componentInstance.chartOptions.maintainAspectRatio).toBe(false);
+  });
+
+  it('shows a PrimeNG spinner while tasks load', () => {
+    loading.set(true);
+    const fixture = TestBed.createComponent(AnalyticsPage);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('p-progress-spinner')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).not.toContain('Tasks by status');
+
+    httpMock.expectOne('/api/activities').flush([]);
+  });
+
+  it('shows a PrimeNG error message when task loading fails', () => {
+    error.set('Could not load tasks.');
+    const fixture = TestBed.createComponent(AnalyticsPage);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('p-message')).toBeTruthy();
+    expect(fixture.nativeElement.textContent).toContain('Could not load tasks.');
+
+    httpMock.expectOne('/api/activities').flush([]);
   });
 });

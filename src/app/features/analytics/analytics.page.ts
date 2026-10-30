@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
+import { MessageModule } from 'primeng/message';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TasksStore } from '../../core/stores/tasks.store';
 import { httpResource } from '@angular/common/http';
 import { Activity } from '../../core/models/activity.model';
@@ -8,7 +10,7 @@ import { ActivityFeedComponent } from './activity-feed/activity-feed.component';
 /** Displays task analytics charts and recent activity. */
 @Component({
   selector: 'app-analytics-page',
-  imports: [ChartModule, ActivityFeedComponent],
+  imports: [ChartModule, ActivityFeedComponent, MessageModule, ProgressSpinnerModule],
   templateUrl: './analytics.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

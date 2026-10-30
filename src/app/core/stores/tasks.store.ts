@@ -21,6 +21,8 @@ export class TasksStore {
   private readonly _loading = signal(false);
   private readonly _error = signal<string | null>(null);
   private readonly _users = signal<Assignee[]>([]);
+  private readonly _usersLoading = signal(false);
+  private readonly _usersError = signal<string | null>(null);
   private readonly _filters = signal<TaskFilters>({
     status: null,
     priority: null,
@@ -34,7 +36,7 @@ export class TasksStore {
   /** Whether tasks are currently being loaded. */
   readonly loading = this._loading.asReadonly();
 
-  /** Most recent task-loading or task-move error. */
+  /** Most recent task-loading error. */
   readonly error = this._error.asReadonly();
 
   /** Active task filters. */
@@ -69,6 +71,12 @@ export class TasksStore {
 
   /** Users available for task assignment. */
   readonly users = this._users.asReadonly();
+
+  /** Whether users are currently being loaded. */
+  readonly usersLoading = this._usersLoading.asReadonly();
+
+  /** Most recent user-loading error. */
+  readonly usersError = this._usersError.asReadonly();
 
   /** Loads tasks from the task service and updates loading and error state. */
   loadTasks(): void {
@@ -150,6 +158,15 @@ export class TasksStore {
 
   /** Loads users and updates the available assignee list. */
   loadUsers(): void {
-    this.userService.getAllUsers().subscribe((users) => this._users.set(users));
+    this._usersLoading.set(true);
+    this._usersError.set(null);
+
+    this.userService
+      .getAllUsers()
+      .pipe(finalize(() => this._usersLoading.set(false)))
+      .subscribe({
+        next: (users) => this._users.set(users),
+        error: (err: Error) => this._usersError.set(err.message),
+      });
   }
 }

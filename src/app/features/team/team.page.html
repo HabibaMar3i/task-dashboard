@@ -1,17 +1,25 @@
 <h1 class="mb-4 text-2xl text-accent font-bold">Team</h1>
 
-<ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-  @for (user of store.users(); track user.id) {
-    <li class="flex items-center gap-3 rounded-lg border border-accent shadow-md bg-white p-4">
-      <span
-        class="flex size-10 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
-      >
-        {{ user.avatar }}
-      </span>
-      <div>
-        <p class="font-semibold">{{ user.name }}</p>
-        <p class="text-sm text-gray-500">{{ user.email }}</p>
-      </div>
-    </li>
-  }
-</ul>
+@if (store.usersLoading()) {
+  <div class="flex min-h-[50vh] items-center justify-center">
+    <p-progress-spinner ariaLabel="Loading team members" />
+  </div>
+} @else if (store.usersError()) {
+  <p-message severity="error" variant="simple">{{ store.usersError() }}</p-message>
+} @else {
+  <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    @for (user of store.users(); track user.id) {
+      <li class="flex items-center gap-3 rounded-lg border border-accent shadow-md bg-white p-4">
+        <span
+          class="flex size-10 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-white"
+        >
+          {{ user.avatar }}
+        </span>
+        <div>
+          <p class="font-semibold">{{ user.name }}</p>
+          <p class="text-sm text-gray-500">{{ user.email }}</p>
+        </div>
+      </li>
+    }
+  </ul>
+}

@@ -30,13 +30,15 @@ const createFakeTaskService = () => ({
 describe('TasksStore', () => {
   let store: TasksStore;
   let taskService: ReturnType<typeof createFakeTaskService>;
+  let userService: { getAllUsers: ReturnType<typeof vi.fn> };
 
   beforeEach(() => {
     taskService = createFakeTaskService();
+    userService = { getAllUsers: vi.fn() };
     TestBed.configureTestingModule({
       providers: [
         { provide: TaskService, useValue: taskService },
-        { provide: UserService, useValue: { getUsers: () => of([]) } },
+        { provide: UserService, useValue: userService },
       ],
     });
     store = TestBed.inject(TasksStore);
@@ -54,6 +56,26 @@ describe('TasksStore', () => {
     store.loadTasks();
     expect(store.error()).toBe('boom');
     expect(store.loading()).toBe(false);
+  });
+
+  it('loads users and stops the user loading state', () => {
+    const users = [{ id: 'u1', name: 'Sara', avatar: 'S', email: 'sara@test.com' }];
+    userService.getAllUsers.mockReturnValue(of(users));
+
+    store.loadUsers();
+
+    expect(store.users()).toEqual(users);
+    expect(store.usersLoading()).toBe(false);
+    expect(store.usersError()).toBeNull();
+  });
+
+  it('stores a user loading error and stops the user loading state', () => {
+    userService.getAllUsers.mockReturnValue(throwError(() => new Error('users unavailable')));
+
+    store.loadUsers();
+
+    expect(store.usersError()).toBe('users unavailable');
+    expect(store.usersLoading()).toBe(false);
   });
 
   it('filters tasks by status', () => {

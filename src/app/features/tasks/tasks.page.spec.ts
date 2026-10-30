@@ -12,6 +12,8 @@ describe('TasksPage', () => {
   let storeMock: {
     loading: ReturnType<typeof signal<boolean>>;
     error: ReturnType<typeof signal<string | null>>;
+    taskLoadingIds: ReturnType<typeof signal<ReadonlySet<string>>>;
+    taskErrors: ReturnType<typeof signal<Record<string, string>>>;
     filters: ReturnType<
       typeof signal<{ status: null; priority: null; search: string; assigneeId: null }>
     >;
@@ -29,6 +31,8 @@ describe('TasksPage', () => {
     storeMock = {
       loading: signal(false),
       error: signal(null),
+      taskLoadingIds: signal(new Set<string>()),
+      taskErrors: signal({}),
       filters: signal({ status: null, priority: null, search: '', assigneeId: null }),
       users: signal([]),
       todoTasks: signal([]),
@@ -104,5 +108,23 @@ describe('TasksPage', () => {
     newTaskButton.click();
 
     expect(fixture.componentInstance.showForm()).toBe(true);
+  });
+
+  it('shows a PrimeNG spinner while tasks are loading', () => {
+    storeMock.loading.set(true);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('p-progress-spinner')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('app-task-column')).toBeNull();
+  });
+
+  it('shows a PrimeNG error message when task loading fails', () => {
+    storeMock.error.set('Could not load tasks.');
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('p-message')?.textContent).toContain(
+      'Could not load tasks.',
+    );
+    expect(fixture.nativeElement.querySelector('app-task-column')).toBeNull();
   });
 });
