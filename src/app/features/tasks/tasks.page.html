@@ -26,7 +26,7 @@
 <div
   class="mb-4 flex flex-col gap-3 rounded-lg bg-white p-3 shadow-sm sm:flex-row sm:items-center sm:justify-between"
 >
-  <div class="flex flex-wrap gap-2">
+  <div class="flex flex-wrap gap-2" role="group" aria-label="Filter tasks by status">
     @for (tab of statusTabs; track tab.label) {
       <button
         type="button"
@@ -45,6 +45,7 @@
   <div class="flex flex-wrap items-center gap-3">
     <select
       class="rounded border border-border bg-white px-3 py-1.5 text-sm"
+      aria-label="Filter tasks by priority"
       [value]="store.filters().priority ?? ''"
       (change)="onPriorityChange($any($event.target).value)"
     >
