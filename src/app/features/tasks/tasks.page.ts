@@ -8,12 +8,13 @@ import {
 } from './task-form-dialog/task-form-dialog.component';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [TaskColumnComponent, TaskFormDialogComponent, ConfirmDialogModule],
+  imports: [TaskColumnComponent, TaskFormDialogComponent, ConfirmDialogModule, CdkDropListGroup],
   providers: [ConfirmationService],
 })
 export class TasksPage implements OnInit {
@@ -86,5 +87,9 @@ export class TasksPage implements OnInit {
         });
       },
     });
+  }
+
+  onMoved(event: { task: Task; status: TaskStatus }) {
+    this.store.moveTask(event.task.id, event.status);
   }
 }

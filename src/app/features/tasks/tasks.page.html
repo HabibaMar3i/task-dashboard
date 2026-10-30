@@ -50,24 +50,30 @@
   </div>
 </div>
 
-<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+<div class="grid grid-cols-1 gap-4 md:grid-cols-3" cdkDropListGroup>
   <app-task-column
     heading="To Do"
     [tasks]="store.todoTasks()"
     (edit)="openEdit($event)"
     (deleteTask)="confirmDelete($event)"
+    status="todo"
+    (moved)="onMoved($event)"
   />
   <app-task-column
     heading="In Progress"
     [tasks]="store.inProgressTasks()"
     (edit)="openEdit($event)"
     (deleteTask)="confirmDelete($event)"
+    status="in_progress"
+    (moved)="onMoved($event)"
   />
   <app-task-column
     heading="Done"
     [tasks]="store.doneTasks()"
     (edit)="openEdit($event)"
     (deleteTask)="confirmDelete($event)"
+    status="done"
+    (moved)="onMoved($event)"
   />
 </div>
 

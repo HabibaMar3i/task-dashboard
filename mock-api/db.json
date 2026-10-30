@@ -15,7 +15,7 @@
       },
       "tags": ["Documentation"],
       "createdAt": "2026-10-26T09:08:44.515Z",
-      "updatedAt": "2026-10-28T09:08:44.515Z"
+      "updatedAt": "2026-10-30T12:22:56.661Z"
     },
     {
       "id": "task-003",
@@ -91,7 +91,7 @@
       "id": "task-005",
       "title": "Implement user authentication",
       "description": "Add JWT-based authentication system with refresh tokens",
-      "status": "in_progress",
+      "status": "todo",
       "priority": "high",
       "dueDate": "2026-11-01",
       "assignee": {
@@ -102,13 +102,13 @@
       },
       "tags": ["Backend"],
       "createdAt": "2026-10-22T09:08:44.515Z",
-      "updatedAt": "2026-10-29T09:08:44.515Z"
+      "updatedAt": "2026-10-30T12:22:58.283Z"
     },
     {
       "id": "task-006",
       "title": "Optimize database queries",
       "description": "Review and optimize slow queries identified in performance audit",
-      "status": "in_progress",
+      "status": "todo",
       "priority": "medium",
       "dueDate": "2026-11-02",
       "assignee": {
@@ -119,13 +119,13 @@
       },
       "tags": ["Performance"],
       "createdAt": "2026-10-23T09:08:44.515Z",
-      "updatedAt": "2026-10-28T09:08:44.515Z"
+      "updatedAt": "2026-10-30T12:23:00.162Z"
     },
     {
       "id": "task-007",
       "title": "Create API endpoints",
       "description": "Develop RESTful API endpoints for task management features",
-      "status": "in_progress",
+      "status": "todo",
       "priority": "high",
       "dueDate": "2026-10-31",
       "assignee": {
@@ -136,7 +136,7 @@
       },
       "tags": ["Backend"],
       "createdAt": "2026-10-21T09:08:44.515Z",
-      "updatedAt": "2026-10-29T09:08:44.515Z"
+      "updatedAt": "2026-10-30T12:23:01.562Z"
     },
     {
       "id": "task-008",

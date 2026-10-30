@@ -106,6 +106,19 @@ export class TasksStore {
       .pipe(tap(() => this._tasks.update((tasks) => tasks.filter((t) => t.id !== id))));
   }
 
+  moveTask(id: string, status: TaskStatus): void {
+    const previous = this._tasks();
+
+    this._tasks.update((tasks) => tasks.map((t) => (t.id === id ? { ...t, status } : t)));
+
+    this.taskService.updateTask(id, { status }).subscribe({
+      error: (err: Error) => {
+        this._tasks.set(previous);
+        this._error.set(err.message);
+      },
+    });
+  }
+
   // Users
   private readonly userService = inject(UserService);
   private readonly _users = signal<Assignee[]>([]);
