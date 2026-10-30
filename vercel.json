@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://task-dashboard-2sn6.onrender.com"
+    }
+  ]
+}
