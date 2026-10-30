@@ -7,11 +7,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class SidebarComponent {
   links = [
-    { label: 'Dashboard', icon: '▦', active: true },
-    { label: 'Tasks', icon: '☑', active: false },
+    { label: 'Dashboard', icon: '📊', active: true },
+    { label: 'Tasks', icon: '✅', active: false },
     { label: 'Calendar', icon: '📅', active: false },
-    { label: 'Analytics', icon: '📊', active: false },
+    { label: 'Analytics', icon: '📈', active: false },
     { label: 'Team', icon: '👥', active: false },
-    { label: 'Settings', icon: '⚙', active: false },
+    { label: 'Settings', icon: '⚙️', active: false },
   ];
 }
