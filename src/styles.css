@@ -17,6 +17,11 @@ body {
   color: #111827;
 }
 
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 .p-progressspinner-circle {
   stroke: var(--color-accent) !important;
 }

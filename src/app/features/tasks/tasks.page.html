@@ -1,18 +1,22 @@
 @if (store.loading()) {
-  <div class="flex min-h-[50vh] items-center justify-center">
+  <div class="flex min-h-[50vh] items-center justify-center" role="status" aria-live="polite">
     <p-progress-spinner ariaLabel="Loading tasks" />
   </div>
 } @else if (store.error()) {
-  <p-message severity="error" variant="simple">{{ store.error() }}</p-message>
+  <p-message severity="error" variant="simple" role="alert">{{ store.error() }}</p-message>
 }
 
 <div class="mb-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
   @if (statistics.isLoading()) {
-    <div class="col-span-full flex min-h-40 items-center justify-center">
+    <div
+      class="col-span-full flex min-h-40 items-center justify-center"
+      role="status"
+      aria-live="polite"
+    >
       <p-progress-spinner ariaLabel="Loading statistics" />
     </div>
   } @else if (statistics.error()) {
-    <p-message severity="error" variant="simple">Could not load statistics.</p-message>
+    <p-message severity="error" variant="simple" role="alert">Could not load statistics.</p-message>
   }
   @for (statistic of statistics.value() ?? []; track statistic.id) {
     <app-statistic-card [statistic]="statistic" />
@@ -27,6 +31,7 @@
       <button
         type="button"
         class="rounded px-4 py-1.5 text-sm"
+        [attr.aria-pressed]="store.filters().status === tab.value"
         [class.bg-accent]="store.filters().status === tab.value"
         [class.text-white]="store.filters().status === tab.value"
         [class.text-text-primary]="store.filters().status !== tab.value"

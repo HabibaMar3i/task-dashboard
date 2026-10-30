@@ -1,11 +1,11 @@
 <h1 class="mb-4 text-2xl text-accent font-bold">Team</h1>
 
 @if (store.usersLoading()) {
-  <div class="flex min-h-[50vh] items-center justify-center">
+  <div class="flex min-h-[50vh] items-center justify-center" role="status" aria-live="polite">
     <p-progress-spinner ariaLabel="Loading team members" />
   </div>
 } @else if (store.usersError()) {
-  <p-message severity="error" variant="simple">{{ store.usersError() }}</p-message>
+  <p-message severity="error" variant="simple" role="alert">{{ store.usersError() }}</p-message>
 } @else {
   <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     @for (user of store.users(); track user.id) {

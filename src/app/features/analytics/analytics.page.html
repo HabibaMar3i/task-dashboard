@@ -1,11 +1,11 @@
 <section class="mt-6 rounded-lg shadow-md mb-4 border border-accent bg-white p-4">
   <h2 class="mb-4 text-2xl font-bold text-accent">Recent activity</h2>
   @if (activities.isLoading()) {
-    <div class="flex h-32 items-center justify-center">
+    <div class="flex h-32 items-center justify-center" role="status" aria-live="polite">
       <p-progress-spinner ariaLabel="Loading activity" />
     </div>
   } @else if (activities.error()) {
-    <p-message severity="error" variant="simple">Could not load activity.</p-message>
+    <p-message severity="error" variant="simple" role="alert">Could not load activity.</p-message>
   } @else {
     <app-activity-feed [activities]="activities.value() ?? []" />
   }
@@ -14,11 +14,11 @@
 <h1 class="mb-4 text-2xl text-accent font-bold">Analytics</h1>
 
 @if (store.loading()) {
-  <div class="flex min-h-[50vh] items-center justify-center">
+  <div class="flex min-h-[50vh] items-center justify-center" role="status" aria-live="polite">
     <p-progress-spinner ariaLabel="Loading analytics" />
   </div>
 } @else if (store.error()) {
-  <p-message severity="error" variant="simple">{{ store.error() }}</p-message>
+  <p-message severity="error" variant="simple" role="alert">{{ store.error() }}</p-message>
 } @else {
   <div class="grid min-w-0 gap-6 md:grid-cols-2">
     <section class="min-w-0 rounded-lg border border-accent bg-white p-4 shadow-md">

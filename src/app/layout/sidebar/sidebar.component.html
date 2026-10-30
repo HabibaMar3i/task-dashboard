@@ -3,16 +3,26 @@
 >
   <nav class="grid grid-cols-3 gap-2 md:flex md:flex-col md:gap-4" aria-label="Main navigation">
     @for (link of links; track link.label) {
-      <a
-        [routerLink]="link.link"
-        class="flex items-center gap-4 rounded px-3 py-2 text-sm"
-        [class.bg-accent]="link.active"
-        [class.text-white]="link.active"
-        [class.text-text-primary]="!link.active"
-      >
-        <span aria-hidden="true">{{ link.icon }}</span>
-        {{ link.label }}
-      </a>
+      @if (link.link) {
+        <a
+          [routerLink]="link.link"
+          routerLinkActive="bg-accent text-white"
+          [routerLinkActiveOptions]="{ exact: link.link === '/' }"
+          ariaCurrentWhenActive="page"
+          class="flex items-center gap-4 rounded px-3 py-2 text-sm text-text-primary"
+        >
+          <span aria-hidden="true">{{ link.icon }}</span>
+          {{ link.label }}
+        </a>
+      } @else {
+        <span
+          aria-disabled="true"
+          class="flex items-center gap-4 rounded px-3 py-2 text-sm text-text-muted"
+        >
+          <span aria-hidden="true">{{ link.icon }}</span>
+          {{ link.label }}
+        </span>
+      }
     }
   </nav>
 
