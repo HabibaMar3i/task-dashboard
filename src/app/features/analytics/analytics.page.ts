@@ -1,15 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, inject, OnInit } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
 import { TasksStore } from '../../core/stores/tasks.store';
+import { httpResource } from '@angular/common/http';
+import { Activity } from '../../core/models/activity.model';
+import { ActivityFeedComponent } from './activity-feed/activity-feed.component';
 
 @Component({
   selector: 'app-analytics-page',
-  imports: [ChartModule],
+  imports: [ChartModule, ActivityFeedComponent],
   templateUrl: './analytics.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsPage implements OnInit {
   store = inject(TasksStore);
+  activities = httpResource<Activity[]>(() => '/api/activities');
 
   chartOptions = { plugins: { legend: { position: 'bottom' } } };
 

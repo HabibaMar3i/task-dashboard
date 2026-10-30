@@ -1,3 +1,14 @@
+<section class="mt-6 rounded-lg shadow-md mb-4 border border-accent bg-white p-4">
+  <h2 class="mb-4 text-2xl font-bold text-accent">Recent activity</h2>
+  @if (activities.isLoading()) {
+    <p>Loading activity...</p>
+  }
+  @if (activities.error()) {
+    <p>Could not load activity.</p>
+  }
+  <app-activity-feed [activities]="activities.value() ?? []" />
+</section>
+
 <h1 class="mb-4 text-2xl text-accent font-bold">Analytics</h1>
 
 <div class="grid gap-6 md:grid-cols-2">
