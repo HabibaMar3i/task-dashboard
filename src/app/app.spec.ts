@@ -19,5 +19,6 @@ describe('App', () => {
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('app-navbar')?.textContent).toContain('Task Manager');
+    expect(compiled.querySelector('app-sidebar')).toBeTruthy();
   });
 });
