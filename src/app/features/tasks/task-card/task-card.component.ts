@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { Task } from '../../../core/models/task.model';
 
 @Component({
@@ -31,4 +31,6 @@ export class TaskCardComponent {
     };
     return classes[this.task().priority];
   });
+
+  edit = output<Task>();
 }

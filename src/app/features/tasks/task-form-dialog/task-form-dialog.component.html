@@ -1,4 +1,9 @@
-<p-dialog header="New Task" [(visible)]="visible" [modal]="true" [style]="{ width: '28rem' }">
+<p-dialog
+  [header]="task() ? 'Edit Task' : 'New Task'"
+  [(visible)]="visible"
+  [modal]="true"
+  [style]="{ width: '28rem' }"
+>
   <form [formGroup]="form" (ngSubmit)="submit()" class="flex flex-col gap-3">
     <label class="flex flex-col gap-1">
       Title

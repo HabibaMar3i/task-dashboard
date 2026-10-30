@@ -1,7 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, input, model, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  input,
+  model,
+  output,
+} from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
-import { Assignee, TaskPriority, TaskStatus } from '../../../core/models/task.model';
+import { Assignee, Task, TaskPriority, TaskStatus } from '../../../core/models/task.model';
 import { notPastDate } from '../../../core/validators/not-past-date.validator';
 
 export interface TaskFormValue {
@@ -58,5 +66,32 @@ export class TaskFormDialogComponent {
     this.visible.set(false);
     this.tags.clear();
     this.form.reset();
+  }
+
+  task = input<Task | null>(null);
+
+  constructor() {
+    effect(() => {
+      const task = this.task();
+      this.tags.clear();
+
+      if (task) {
+        task.tags.forEach(() => this.addTag());
+        this.form.controls.dueDate.setValidators([Validators.required]);
+        this.form.patchValue({
+          title: task.title,
+          description: task.description,
+          priority: task.priority,
+          status: task.status,
+          dueDate: task.dueDate,
+          assigneeId: task.assignee.id,
+          tags: task.tags,
+        });
+      } else {
+        this.form.controls.dueDate.setValidators([Validators.required, notPastDate]);
+        this.form.reset();
+      }
+      this.form.controls.dueDate.updateValueAndValidity();
+    });
   }
 }

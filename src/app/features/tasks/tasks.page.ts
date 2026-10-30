@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { TasksStore } from '../../core/stores/tasks.store';
 import { TaskColumnComponent } from './task-column/task-column.component';
-import { TaskStatus, TaskPriority } from '../../core/models/task.model';
+import { TaskStatus, TaskPriority, Task } from '../../core/models/task.model';
 import {
   TaskFormValue,
   TaskFormDialogComponent,
@@ -34,22 +34,37 @@ export class TasksPage implements OnInit {
 
   showForm = signal(false);
 
+  editingTask = signal<Task | null>(null);
+
+  openCreate() {
+    this.editingTask.set(null);
+    this.showForm.set(true);
+  }
+
+  openEdit(task: Task) {
+    this.editingTask.set(task);
+    this.showForm.set(true);
+  }
+
   onSave(value: TaskFormValue) {
     const assignee = this.store.users().find((u) => u.id === value.assigneeId);
     if (!assignee) return;
 
-    this.store
-      .addTask({
-        title: value.title,
-        description: value.description,
-        priority: value.priority,
-        status: value.status,
-        dueDate: value.dueDate,
-        tags: value.tags,
-        assignee,
-      })
-      .subscribe({
-        error: (e: Error) => console.log(e.message),
-      });
+    const fields = {
+      title: value.title,
+      description: value.description,
+      priority: value.priority,
+      status: value.status,
+      dueDate: value.dueDate,
+      tags: value.tags,
+      assignee,
+    };
+
+    const editing = this.editingTask();
+    const request = editing
+      ? this.store.updateTask(editing.id, fields)
+      : this.store.addTask(fields);
+
+    request.subscribe({ error: (e: Error) => console.log(e.message) });
   }
 }

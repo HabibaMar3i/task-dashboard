@@ -8,7 +8,14 @@
     <span class="rounded px-2 py-1 text-[10px] font-bold uppercase" [class]="priorityClass()">
       {{ task().priority }}
     </span>
-    <span class="text-lg leading-none text-text-muted" aria-hidden="true">⋮</span>
+    <button
+      type="button"
+      aria-label="Edit task"
+      class="cursor-pointer border-0 bg-transparent text-lg leading-none text-text-muted"
+      (click)="edit.emit(task())"
+    >
+      ⋮
+    </button>
   </div>
 
   <h3 class="mb-1 text-sm font-bold text-text-primary">{{ task().title }}</h3>

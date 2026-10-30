@@ -37,16 +37,25 @@
     <button
       type="button"
       class="rounded bg-accent px-4 py-1.5 text-sm font-bold text-white cursor-pointer"
-      (click)="showForm.set(true)"
+      (click)="openCreate()"
     >
       + New Task
     </button>
-    <app-task-form-dialog [users]="store.users()" [(visible)]="showForm" (save)="onSave($event)" />
+    <app-task-form-dialog
+      [users]="store.users()"
+      [(visible)]="showForm"
+      (save)="onSave($event)"
+      [task]="editingTask()"
+    />
   </div>
 </div>
 
 <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
-  <app-task-column heading="To Do" [tasks]="store.todoTasks()" />
-  <app-task-column heading="In Progress" [tasks]="store.inProgressTasks()" />
-  <app-task-column heading="Done" [tasks]="store.doneTasks()" />
+  <app-task-column heading="To Do" [tasks]="store.todoTasks()" (edit)="openEdit($event)" />
+  <app-task-column
+    heading="In Progress"
+    [tasks]="store.inProgressTasks()"
+    (edit)="openEdit($event)"
+  />
+  <app-task-column heading="Done" [tasks]="store.doneTasks()" (edit)="openEdit($event)" />
 </div>

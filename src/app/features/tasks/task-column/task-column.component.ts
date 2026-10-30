@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Task } from '../../../core/models/task.model';
 import { TaskCardComponent } from '../task-card/task-card.component';
 
@@ -11,4 +11,5 @@ import { TaskCardComponent } from '../task-card/task-card.component';
 export class TaskColumnComponent {
   heading = input.required<string>();
   tasks = input.required<Task[]>();
+  edit = output<Task>();
 }
