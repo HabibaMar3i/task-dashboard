@@ -13,6 +13,7 @@ import { httpResource } from '@angular/common/http';
 import { Statistic } from '../../core/models/statistic.model';
 import { StatCardComponent } from './statistic-card/statistic-card.component';
 
+/** Coordinates task filtering, editing, deletion, and drag-and-drop on the dashboard. */
 @Component({
   selector: 'app-tasks-page',
   templateUrl: './tasks.page.html',
@@ -27,15 +28,21 @@ import { StatCardComponent } from './statistic-card/statistic-card.component';
   providers: [ConfirmationService],
 })
 export class TasksPage implements OnInit {
+  /** Shared task data and filtering state. */
   store = inject(TasksStore);
+
   private confirmationService = inject(ConfirmationService);
+
+  /** Statistics loaded for the dashboard cards. */
   statistics = httpResource<Statistic[]>(() => '/api/statistics');
 
-  ngOnInit() {
-    this.store.loadTasks();
-    this.store.loadUsers();
-  }
+  /** Whether the task form dialog is open. */
+  showForm = signal(false);
 
+  /** Task currently being edited, or null when creating a task. */
+  editingTask = signal<Task | null>(null);
+
+  /** Status filter choices displayed above the task columns. */
   statusTabs: { label: string; value: TaskStatus | null }[] = [
     { label: 'All', value: null },
     { label: 'To Do', value: 'todo' },
@@ -43,24 +50,33 @@ export class TasksPage implements OnInit {
     { label: 'Done', value: 'done' },
   ];
 
+  /** Emits a task selected for removal. */
+  remove = output<Task>();
+
+  /** Loads tasks and users when the page is initialized. */
+  ngOnInit() {
+    this.store.loadTasks();
+    this.store.loadUsers();
+  }
+
+  /** Updates the task priority filter from the selected option. */
   onPriorityChange(value: string): void {
     this.store.setPriority((value || null) as TaskPriority | null);
   }
 
-  showForm = signal(false);
-
-  editingTask = signal<Task | null>(null);
-
+  /** Opens the form to create a new task. */
   openCreate() {
     this.editingTask.set(null);
     this.showForm.set(true);
   }
 
+  /** Opens the form with the selected task for editing. */
   openEdit(task: Task) {
     this.editingTask.set(task);
     this.showForm.set(true);
   }
 
+  /** Creates or updates a task using the submitted form values. */
   onSave(value: TaskFormValue) {
     const assignee = this.store.users().find((u) => u.id === value.assigneeId);
     if (!assignee) return;
@@ -83,8 +99,7 @@ export class TasksPage implements OnInit {
     request.subscribe({ error: (e: Error) => console.log(e.message) });
   }
 
-  remove = output<Task>();
-
+  /** Requests confirmation before removing the selected task. */
   confirmDelete(task: Task) {
     this.confirmationService.confirm({
       header: 'Delete task',
@@ -99,6 +114,7 @@ export class TasksPage implements OnInit {
     });
   }
 
+  /** Persists the destination status after a task is moved to another column. */
   onMoved(event: { task: Task; status: TaskStatus }) {
     this.store.moveTask(event.task.id, event.status);
   }
