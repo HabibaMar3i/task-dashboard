@@ -5,6 +5,7 @@ import { httpResource } from '@angular/common/http';
 import { Activity } from '../../core/models/activity.model';
 import { ActivityFeedComponent } from './activity-feed/activity-feed.component';
 
+/** Displays task analytics charts and recent activity. */
 @Component({
   selector: 'app-analytics-page',
   imports: [ChartModule, ActivityFeedComponent],
@@ -12,11 +13,16 @@ import { ActivityFeedComponent } from './activity-feed/activity-feed.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsPage implements OnInit {
+  /** Shared task data and loading actions. */
   store = inject(TasksStore);
+
+  /** Recent activity returned by the activity API. */
   activities = httpResource<Activity[]>(() => '/api/activities');
 
+  /** Options shared by the analytics charts. */
   chartOptions = { plugins: { legend: { position: 'bottom' } } };
 
+  /** Task counts grouped by workflow status. */
   statusChart = computed(() => {
     const tasks = this.store.tasks();
     return {
@@ -34,6 +40,7 @@ export class AnalyticsPage implements OnInit {
     };
   });
 
+  /** Task counts grouped by priority. */
   priorityChart = computed(() => {
     const tasks = this.store.tasks();
     return {
@@ -51,6 +58,7 @@ export class AnalyticsPage implements OnInit {
     };
   });
 
+  /** Loads task data when the analytics page is initialized. */
   ngOnInit() {
     this.store.loadTasks();
   }
