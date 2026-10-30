@@ -8,4 +8,8 @@ export const routes: Routes = [
     path: 'analytics',
     loadComponent: () => import('./features/analytics/analytics.page').then((m) => m.AnalyticsPage),
   },
+  {
+    path: 'team',
+    loadComponent: () => import('./features/team/team.page').then((m) => m.TeamPage),
+  },
 ];
