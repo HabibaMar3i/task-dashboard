@@ -1,3 +1,4 @@
+/** A recorded action performed on a task. */
 export interface Activity {
   id: string;
   taskId: string;
